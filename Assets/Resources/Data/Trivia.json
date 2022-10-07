@@ -1,0 +1,181 @@
+{
+    "answerPrefix": "What is..",
+    "categories": [
+        {
+            "title": "tv in xxxx",
+            "description": "Shows which got aired in 2013",
+            "questions": [
+                {
+                    "question": "This anime features kirito.",
+                    "answer": [ "Sword Art Online" ],
+                    "points": 100
+                },
+                {
+                    "question": "This DC animated tv show featuring sidekicks received a reboot in xxxx.",
+                    "answer": [
+                        "Teen Titans",
+                        "Teen Titans GO",
+                        "Teen Titans GO!"
+                    ],
+                    "points": 200
+                },
+                {
+                    "question": "This crime drama series, which took place in albuquerque, new mexico",
+                    "answer": [ "breaking bad" ],
+                    "points": 300
+                },
+                {
+                    "question": "This comedic docu-reality show, which features a business school graduate and his elaborate schemes.",
+                    "answer": [ "Nathan for you" ],
+                    "points": 400
+                },
+                {
+                    "question": "This short-lived comedy series, created by bo burnham.",
+                    "answer": [ "Zach Stone" ],
+                    "points": 500
+                }
+            ]
+        },
+        {
+            "title": "Category",
+            "description": "Shows which got aired in 2013",
+            "questions": [
+                {
+                    "question": "This anime features kirito.",
+                    "answer": [ "Sword Art Online" ],
+                    "points": 100
+                },
+                {
+                    "question": "This DC animated tv show featuring sidekicks received a reboot in xxxx.",
+                    "answer": [
+                        "Teen Titans",
+                        "Teen Titans GO",
+                        "Teen Titans GO!"
+                    ],
+                    "points": 200
+                },
+                {
+                    "question": "This crime drama series, which took place in albuquerque, new mexico",
+                    "answer": [ "breaking bad" ],
+                    "points": 300
+                },
+                {
+                    "question": "This comedic docu-reality show, which features a business school graduate and his elaborate schemes.",
+                    "answer": [ "Nathan for you" ],
+                    "points": 400
+                },
+                {
+                    "question": "This short-lived comedy series, created by bo burnham.",
+                    "answer": [ "Zach Stone" ],
+                    "points": 500
+                }
+            ]
+        },
+        {
+            "title": "Category",
+            "description": "Shows which got aired in 2013",
+            "questions": [
+                {
+                    "question": "This anime features kirito.",
+                    "answer": [ "Sword Art Online" ],
+                    "points": 100
+                },
+                {
+                    "question": "This DC animated tv show featuring sidekicks received a reboot in xxxx.",
+                    "answer": [
+                        "Teen Titans",
+                        "Teen Titans GO",
+                        "Teen Titans GO!"
+                    ],
+                    "points": 200
+                },
+                {
+                    "question": "This crime drama series, which took place in albuquerque, new mexico",
+                    "answer": [ "breaking bad" ],
+                    "points": 300
+                },
+                {
+                    "question": "This comedic docu-reality show, which features a business school graduate and his elaborate schemes.",
+                    "answer": [ "Nathan for you" ],
+                    "points": 400
+                },
+                {
+                    "question": "This short-lived comedy series, created by bo burnham.",
+                    "answer": [ "Zach Stone" ],
+                    "points": 500
+                }
+            ]
+        },
+        {
+            "title": "Category",
+            "description": "Shows which got aired in 2013",
+            "questions": [
+                {
+                    "question": "This anime features kirito.",
+                    "answer": [ "Sword Art Online" ],
+                    "points": 100
+                },
+                {
+                    "question": "This DC animated tv show featuring sidekicks received a reboot in xxxx.",
+                    "answer": [
+                        "Teen Titans",
+                        "Teen Titans GO",
+                        "Teen Titans GO!"
+                    ],
+                    "points": 200
+                },
+                {
+                    "question": "This crime drama series, which took place in albuquerque, new mexico",
+                    "answer": [ "breaking bad" ],
+                    "points": 300
+                },
+                {
+                    "question": "This comedic docu-reality show, which features a business school graduate and his elaborate schemes.",
+                    "answer": [ "Nathan for you" ],
+                    "points": 400
+                },
+                {
+                    "question": "This short-lived comedy series, created by bo burnham.",
+                    "answer": [ "Zach Stone" ],
+                    "points": 500
+                }
+            ]
+        },
+        {
+            "title": "Category",
+            "description": "Shows which got aired in 2013",
+            "questions": [
+                {
+                    "question": "This anime features kirito.",
+                    "answer": [ "Sword Art Online" ],
+                    "points": 100
+                },
+                {
+                    "question": "This DC animated tv show featuring sidekicks received a reboot in xxxx.",
+                    "answer": [
+                        "Teen Titans",
+                        "Teen Titans GO",
+                        "Teen Titans GO!"
+                    ],
+                    "points": 200
+                },
+                {
+                    "question": "This crime drama series, which took place in albuquerque, new mexico",
+                    "answer": [ "breaking bad" ],
+                    "points": 300
+                },
+                {
+                    "question": "This comedic docu-reality show, which features a business school graduate and his elaborate schemes.",
+                    "answer": [ "Nathan for you" ],
+                    "points": 400
+                },
+                {
+                    "question": "This short-lived comedy series, created by bo burnham.",
+                    "answer": [ "Zach Stone" ],
+                    "points": 500
+                }
+            ]
+        }
+    ]
+
+}
