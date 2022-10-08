@@ -105,6 +105,9 @@ public class TriviaBoard : MonoBehaviour
             .OnComplete(ShowQuestions);
     }
 
+    /// <summary>
+    /// Show the questions for the selected category
+    /// </summary>
     private void ShowQuestions()
     {
         // Fade in the questions
@@ -118,13 +121,16 @@ public class TriviaBoard : MonoBehaviour
             }
         }
 
-        // Enable the colliders
         // TODO: wait until the last question is faded in
         ToggleQuestionInteraction(true);
 
         BoardQuestion.QuestionClicked += OnQuestionClicked;
     }
 
+    /// <summary>
+    /// Start the sequence of opening the question once it has been clicked
+    /// </summary>
+    /// <param name="question"></param>
     private void OnQuestionClicked(BoardQuestion question)
     {
         BoardQuestion.QuestionClicked -= OnQuestionClicked;
@@ -133,9 +139,6 @@ public class TriviaBoard : MonoBehaviour
         ToggleQuestionInteraction(false);
         ShowFocussedCategory();
 
-        // TODO: Hide categories
-        // TODO: Only enable the category title that was clicked
-
         // Fade in the color, then open the card
         question.FadeBackgroundColor(_questionSelectedColor, _questionPointsColor, _questionRecolorDuration, () => {
             Vector2 movePos = new Vector2(Screen.width / 2 * _questionPanelCenterFactor.x, Screen.height / 2 * _questionPanelCenterFactor.y);
@@ -143,6 +146,10 @@ public class TriviaBoard : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Toggle the interaction of all the questions
+    /// </summary>
+    /// <param name="enable">TRUE if all questions should be interactable</param>
     private void ToggleQuestionInteraction(bool enable)
     {
         for (int i = 0; i < _boardCategories.Count; i++)
@@ -154,6 +161,9 @@ public class TriviaBoard : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Fade in the category that was selected
+    /// </summary>
     private void ShowFocussedCategory()
     {
         _categorySelectedTitle.gameObject.SetActive(true);
@@ -174,7 +184,12 @@ public class TriviaBoard : MonoBehaviour
         });
     }
 
-    private void HideFocussedCategory()
+    private void HideFocussedQuestion()
+    {
+        
+    }
+
+    private void HideBoard()
     {
         
     }

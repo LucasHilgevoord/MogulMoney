@@ -10,7 +10,7 @@ public class TriviaManager : MonoBehaviour
     private TriviaData _trivia;
 
     [SerializeField] private GameObject _triviaPanel;
-    [SerializeField] private CanvasGroup _triviaPanelCanvasGroup;
+    [SerializeField] private CanvasGroup _triviaCanvasGroup;
     [SerializeField] private float _fadeInDuration = 1f;
 
     [SerializeField] private CategoryPreviewer _categoryPreviewer;
@@ -19,7 +19,7 @@ public class TriviaManager : MonoBehaviour
     public void Awake()
     {
         _triviaPanel.SetActive(false);
-        _triviaPanelCanvasGroup.alpha = 0;
+        _triviaCanvasGroup.alpha = 0;
     }
 
     public void Start()
@@ -48,7 +48,7 @@ public class TriviaManager : MonoBehaviour
         _hasStarted = true;
 
         _triviaPanel.SetActive(true);
-        _triviaPanelCanvasGroup.DOFade(1, _fadeInDuration).OnComplete(() =>
+        _triviaCanvasGroup.DOFade(1, _fadeInDuration).OnComplete(() =>
         {
             //StartCategoryPreview();
             StartTriviaBoard();
@@ -72,5 +72,21 @@ public class TriviaManager : MonoBehaviour
     private void StartTriviaBoard()
     {
         _triviaBoard.OpenBoard();
+        BoardQuestion.QuestionDisplayed += OnQuestionDisplayed;
+    }
+
+    private void OnQuestionDisplayed(BoardQuestion question)
+    {
+        BoardQuestion.QuestionDisplayed -= OnQuestionDisplayed;
+
+        // Create a timer before moving to the other view
+        StartCoroutine(WaitUntilHide());
+    }
+
+    IEnumerator WaitUntilHide()
+    {
+        yield return new WaitForSeconds(3f);
+        CameraManager.Instance.ChangeCameraAngle(CameraAngles.Candidates);
+        _triviaCanvasGroup.DOFade(0, 1f);
     }
 }

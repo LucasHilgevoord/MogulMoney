@@ -9,6 +9,7 @@ using Sequence = DG.Tweening.Sequence;
 public class BoardQuestion : MonoBehaviour
 {
     public static event Action<BoardQuestion> QuestionClicked;
+    public static event Action<BoardQuestion> QuestionDisplayed;
     public BoardCategory parentCategory { get; private set; }
 
     [Header("Parameters")]
@@ -110,5 +111,6 @@ public class BoardQuestion : MonoBehaviour
         infoSequence.Append(questionLabel.DOFade(1, 0.5f));
 
         infoSequence.Play();
+        infoSequence.OnComplete(() => { QuestionDisplayed?.Invoke(this); });
     }
 }
