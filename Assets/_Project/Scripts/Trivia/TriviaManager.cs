@@ -87,6 +87,6 @@ public class TriviaManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         CameraManager.Instance.ChangeCameraAngle(CameraAngles.Candidates);
-        _triviaCanvasGroup.DOFade(0, 1f);
+        _triviaCanvasGroup.DOFade(0, 0f);
     }
 }

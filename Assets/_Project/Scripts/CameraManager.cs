@@ -17,8 +17,8 @@ public class CameraPosition {
     public CameraAngles Angle;
     public Vector3 Position;
     public Vector3 Rotation;
-    public float Duration;
-    public Ease Ease;
+    public float POV = 60;
+    public float FocalLenght = 20.7f;
 }
 
 public class CameraManager : Singleton<CameraManager>
@@ -28,7 +28,7 @@ public class CameraManager : Singleton<CameraManager>
     [SerializeField] private Camera _camera;
     [SerializeField] private List<CameraPosition> _cameraPositions;
 
-    public void ChangeCameraAngle(CameraAngles cameraAngle)
+    public void ChangeCameraAngle(CameraAngles cameraAngle, float moveDuration = 0, Ease ease = Ease.Flash)
     {
         if (_currentCameraAngle == cameraAngle) { return; }
         _currentCameraAngle = cameraAngle;
@@ -38,8 +38,10 @@ public class CameraManager : Singleton<CameraManager>
             throw new KeyNotFoundException($"Camera position for {cameraAngle} not found");
         }
 
-        _camera.transform.DOMove(cameraPosition.Position, cameraPosition.Duration);
-        _camera.transform.DORotate(cameraPosition.Rotation, cameraPosition.Duration);
+        _camera.transform.DOMove(cameraPosition.Position, moveDuration).SetEase(ease);
+        _camera.transform.DORotate(cameraPosition.Rotation, moveDuration).SetEase(ease);
+        _camera.fieldOfView = cameraPosition.POV;
+        _camera.focalLength = cameraPosition.FocalLenght;
     }
 
     private void OnValidate()
