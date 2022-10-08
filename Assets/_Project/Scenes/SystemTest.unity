@@ -1121,7 +1121,7 @@ MonoBehaviour:
     POV: 77
     FocalLenght: 15
   - Angle: 1
-    Position: {x: -1.81, y: 2.93, z: -2.93}
+    Position: {x: -1.71, y: 2.93, z: -2.93}
     Rotation: {x: 5.8, y: 53.359997, z: 0}
     POV: 40.41714
     FocalLenght: 32.6
@@ -1188,7 +1188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -182.8, y: -31.1}
+  m_AnchoredPosition: {x: -182.8, y: -31.100006}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &536902026
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: -5, y: -5}
   m_UseGraphicAlpha: 1
 --- !u!114 &536902027
 MonoBehaviour:
@@ -1945,7 +1945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -135.78}
+  m_AnchoredPosition: {x: 0, y: -135.77997}
   m_SizeDelta: {x: -1920, y: 912.777}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1050564651
@@ -2417,7 +2417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 182.8, y: -31.1}
+  m_AnchoredPosition: {x: 182.8, y: -31.100006}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1292697712
@@ -3268,7 +3268,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1143.93, y: 491.9493}
+  m_SizeDelta: {x: 1150, y: 490}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1536908320
 MonoBehaviour:
@@ -3381,7 +3381,7 @@ GameObject:
   - component: {fileID: 1605185282}
   - component: {fileID: 1605185281}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Category
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
