@@ -37,7 +37,7 @@
             ]
         },
         {
-            "title": "Category",
+            "title": "Category_A",
             "description": "Shows which got aired in 2013",
             "questions": [
                 {
@@ -72,7 +72,7 @@
             ]
         },
         {
-            "title": "Category",
+            "title": "Category_B",
             "description": "Shows which got aired in 2013",
             "questions": [
                 {
@@ -107,7 +107,7 @@
             ]
         },
         {
-            "title": "Category",
+            "title": "Category_C",
             "description": "Shows which got aired in 2013",
             "questions": [
                 {
@@ -142,12 +142,15 @@
             ]
         },
         {
-            "title": "Category",
+            "title": "Category_D",
             "description": "Shows which got aired in 2013",
             "questions": [
                 {
                     "question": "This anime features kirito.",
-                    "answer": [ "Sword Art Online" ],
+                    "answer": [ 
+                        "Sword Art Online",
+                        "SAO" 
+                    ],
                     "points": 100
                 },
                 {

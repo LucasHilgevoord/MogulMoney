@@ -101,7 +101,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "8108a8a0d3be47a89548ce6b472259da"
+                    "m_Id": "411dfe633af147c8a1b331f4de36a178"
                 },
                 "m_SlotId": 0
             }
@@ -726,7 +726,7 @@
     "m_ObjectId": "6969c0f2a24645fd941a49df85889bbf",
     "m_MaterialNeedsUpdateHash": 0,
     "m_SurfaceType": 0,
-    "m_RenderingPass": 1,
+    "m_RenderingPass": 2,
     "m_BlendMode": 0,
     "m_ZTest": 4,
     "m_ZWrite": false,
@@ -749,7 +749,7 @@
     "m_TessellationBackFaceCullEpsilon": -0.25,
     "m_TessellationMaxDisplacement": 0.009999999776482582,
     "m_Version": 1,
-    "inspectorFoldoutMask": 0
+    "inspectorFoldoutMask": 9
 }
 
 {

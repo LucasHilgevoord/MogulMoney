@@ -13,14 +13,14 @@ public class CategoryPreviewer : MonoBehaviour
     [SerializeField] private CategoryPreview _categoryPreviewPrefab;
 
     private int _currentIndex = 0;
-    private TriviaCategory[] _categories;
+    private TriviaCategoryData[] _categories;
     private List<CategoryPreview> _previews;
     
     [SerializeField] private float _scrollDuration = 0.75f;
     [SerializeField] private float _appearDuration = 1f;
     [SerializeField] private float _disappearDelay = 1f;
 
-    internal void Initialize(TriviaCategory[] categories)
+    internal void Initialize(TriviaCategoryData[] categories)
     {
         _categories = categories;
         CreateLineUp();

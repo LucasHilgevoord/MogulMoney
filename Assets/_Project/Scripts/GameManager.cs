@@ -7,11 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TriviaManager _triviaManager;
 
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _triviaManager.StartGame();
-        }
+        _triviaManager.StartGame();
     }
 }

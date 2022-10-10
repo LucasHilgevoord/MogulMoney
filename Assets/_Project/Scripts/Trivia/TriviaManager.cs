@@ -15,6 +15,7 @@ public class TriviaManager : MonoBehaviour
 
     [SerializeField] private CategoryPreviewer _categoryPreviewer;
     [SerializeField] private TriviaBoard _triviaBoard;
+    [SerializeField] private QuestionInputHandler _questionHandler;
 
     public void Awake()
     {
@@ -72,21 +73,30 @@ public class TriviaManager : MonoBehaviour
     private void StartTriviaBoard()
     {
         _triviaBoard.OpenBoard();
-        BoardQuestion.QuestionDisplayed += OnQuestionDisplayed;
+        TriviaQuestion.QuestionDisplayed += OnQuestionDisplayed;
     }
 
-    private void OnQuestionDisplayed(BoardQuestion question)
+    private void OnQuestionDisplayed(TriviaQuestion question)
     {
-        BoardQuestion.QuestionDisplayed -= OnQuestionDisplayed;
+        TriviaQuestion.QuestionDisplayed -= OnQuestionDisplayed;
 
         // Create a timer before moving to the other view
+        IEnumerator WaitUntilHide()
+        {
+            yield return new WaitForSeconds(3f);
+            StageManager.Instance.ChangeView(StagePresets.Contestants);
+
+            // Hide the trivia board
+            _triviaBoard.HideBoard(() =>
+            {
+                _triviaCanvasGroup.DOFade(0, 0.5f);
+            });
+        }
         StartCoroutine(WaitUntilHide());
     }
 
-    IEnumerator WaitUntilHide()
+    private void OnBuzzerPressed()
     {
-        yield return new WaitForSeconds(3f);
-        CameraManager.Instance.ChangeCameraAngle(CameraAngles.Candidates);
-        _triviaCanvasGroup.DOFade(0, 0f);
+        //_questionHandler.StartInput(question);
     }
 }

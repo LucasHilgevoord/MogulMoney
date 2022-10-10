@@ -7,27 +7,27 @@ using UnityEngine;
 public class TriviaData
 {
     public string answerPrefix;
-    public TriviaCategory[] categories;
+    public TriviaCategoryData[] categories;
 
     public TriviaData() { }
 }
 
 [Serializable]
-public class TriviaCategory
+public class TriviaCategoryData
 {
     public string title;
-    public TriviaQuestion[] questions;
+    public TriviaQuestionData[] questions;
 
-    public TriviaCategory() { }
+    public TriviaCategoryData() { }
 }
 
 
 [Serializable]
-public class TriviaQuestion
+public class TriviaQuestionData
 {
     public string question;
     public string[] answer;
     public int points;
 
-    public TriviaQuestion() { }
+    public TriviaQuestionData() { }
 }

@@ -6,6 +6,6 @@ using UnityEngine;
 public class BoardCategory : MonoBehaviour
 {
     public TextMeshProUGUI Title;
-    internal BoardQuestion[] Questions;
+    internal TriviaQuestion[] Questions;
     public GameObject QuestionParent;
 }

@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,7 +8,7 @@ public class TriviaBoard : MonoBehaviour
 {
     [SerializeField] private float _appearDuration = 1f;
     [SerializeField] private Transform _line;
-    private BoardQuestion _selectedQuestion;
+    private TriviaQuestion _selectedQuestion;
 
     [Header("Categories")]
     private List<BoardCategory> _boardCategories;
@@ -20,7 +19,7 @@ public class TriviaBoard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _categorySelectedTitle;
 
     [Header("QuestionCard")]
-    [SerializeField] private BoardQuestion _questionPrefab;
+    [SerializeField] private TriviaQuestion _questionPrefab;
     [SerializeField] private float _questionFadeDelay = 0.05f;
     [SerializeField] private Color _questionSelectedColor;
     [SerializeField] private Color _questionPointsColor;
@@ -29,8 +28,9 @@ public class TriviaBoard : MonoBehaviour
     [SerializeField] private Vector2 _questionPanelSize;
     [SerializeField] private Vector2 _questionPanelCenterFactor;
     [SerializeField] private float _questionPointRescale;
+    [SerializeField] private Transform _hideMask;
 
-    internal void Initialize(TriviaCategory[] categories)
+    internal void Initialize(TriviaCategoryData[] categories)
     {
         _boardCategories = new List<BoardCategory>();
         for (int i = 0; i < categories.Length; i++)
@@ -43,11 +43,11 @@ public class TriviaBoard : MonoBehaviour
             category.Title.alpha = 0;
 
             // Create the questions for the category
-            category.Questions = new BoardQuestion[categories[i].questions.Length];
+            category.Questions = new TriviaQuestion[categories[i].questions.Length];
             for (int j = 0; j < categories[i].questions.Length; j++)
             {
                 // Create the question and assign the question data
-                BoardQuestion question = Instantiate(_questionPrefab, category.QuestionParent.transform);
+                TriviaQuestion question = Instantiate(_questionPrefab, category.QuestionParent.transform);
                 question.Initialize(categories[i].questions[j], category);
                 category.Questions[j] = question;
             }
@@ -60,6 +60,8 @@ public class TriviaBoard : MonoBehaviour
 
     private void ResetBoard()
     {
+        _categoryParent.SetActive(true);
+
         // Make the line small so we can scale it in later
         _line.localScale = new Vector3(0, 1, 1);
         _categorySelectedTitle.alpha = 0;
@@ -124,23 +126,24 @@ public class TriviaBoard : MonoBehaviour
         // TODO: wait until the last question is faded in
         ToggleQuestionInteraction(true);
 
-        BoardQuestion.QuestionClicked += OnQuestionClicked;
+        TriviaQuestion.QuestionClicked += OnQuestionClicked;
     }
 
     /// <summary>
     /// Start the sequence of opening the question once it has been clicked
     /// </summary>
     /// <param name="question"></param>
-    private void OnQuestionClicked(BoardQuestion question)
+    private void OnQuestionClicked(TriviaQuestion question)
     {
-        BoardQuestion.QuestionClicked -= OnQuestionClicked;
+        TriviaQuestion.QuestionClicked -= OnQuestionClicked;
         _selectedQuestion = question;
 
         ToggleQuestionInteraction(false);
         ShowFocussedCategory();
 
         // Fade in the color, then open the card
-        question.FadeBackgroundColor(_questionSelectedColor, _questionPointsColor, _questionRecolorDuration, () => {
+        question.FadeBackgroundColor(_questionSelectedColor, _questionPointsColor, _questionRecolorDuration, () =>
+        {
             Vector2 movePos = new Vector2(Screen.width / 2 * _questionPanelCenterFactor.x, Screen.height / 2 * _questionPanelCenterFactor.y);
             question.OpenCard(_questionPanelSize, _questionPointRescale, movePos, _questionScaleDuration);
         });
@@ -179,18 +182,26 @@ public class TriviaBoard : MonoBehaviour
         hideSequence.Play();
 
         // Once the sequence is complete then show the category we are focussed on
-        hideSequence.OnComplete(() => {
-            _categorySelectedTitle.DOFade(1, _categoryFadeDuration);
+        hideSequence.OnComplete(() => { 
+            _categorySelectedTitle.DOFade(1, _categoryFadeDuration); 
         });
     }
 
-    private void HideFocussedQuestion()
+    internal void HideBoard(Action OnComplete)
     {
-        
+        _categorySelectedTitle.DOFade(0, _categoryFadeDuration);
+        _selectedQuestion.HideInfo(() => { 
+            OnQuestionHidden(OnComplete); 
+        });
     }
 
-    private void HideBoard()
+    private void OnQuestionHidden(Action OnComplete)
     {
-        
+        // Hide the rest of the questions
+        _categoryParent.SetActive(false);
+        _selectedQuestion.MovePanelUp(_hideMask, () => {
+            _line.DOScaleX(0, _categoryFadeDelay).SetEase(Ease.OutSine);
+            OnComplete?.Invoke(); 
+        });
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public enum CameraAngles
 {
     Front,
-    Candidates,
+    Contestants,
     Top,
     Host
 }
@@ -21,12 +21,13 @@ public class CameraPosition {
     public float FocalLenght = 20.7f;
 }
 
-public class CameraManager : Singleton<CameraManager>
+public class CameraManager : MonoBehaviour
 {
     private CameraAngles _currentCameraAngle;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private List<CameraPosition> _cameraPositions;
+    [SerializeField] private CameraAngles _startAngle = CameraAngles.Front;
 
     public void ChangeCameraAngle(CameraAngles cameraAngle, float moveDuration = 0, Ease ease = Ease.Flash)
     {
@@ -38,8 +39,17 @@ public class CameraManager : Singleton<CameraManager>
             throw new KeyNotFoundException($"Camera position for {cameraAngle} not found");
         }
 
-        _camera.transform.DOMove(cameraPosition.Position, moveDuration).SetEase(ease);
-        _camera.transform.DORotate(cameraPosition.Rotation, moveDuration).SetEase(ease);
+        if (moveDuration == 0)
+        {
+            _camera.transform.position = cameraPosition.Position;
+            _camera.transform.eulerAngles = cameraPosition.Rotation;
+        }
+        else
+        {
+            _camera.transform.DOMove(cameraPosition.Position, moveDuration).SetEase(ease);
+            _camera.transform.DORotate(cameraPosition.Rotation, moveDuration).SetEase(ease);
+        }
+        
         _camera.fieldOfView = cameraPosition.POV;
         _camera.focalLength = cameraPosition.FocalLenght;
     }

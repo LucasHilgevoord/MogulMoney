@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sequence = DG.Tweening.Sequence;
 
-public class BoardQuestion : MonoBehaviour
+public class TriviaQuestion : MonoBehaviour
 {
-    public static event Action<BoardQuestion> QuestionClicked;
-    public static event Action<BoardQuestion> QuestionDisplayed;
+    public static event Action<TriviaQuestion> QuestionClicked;
+    public static event Action<TriviaQuestion> QuestionDisplayed;
     public BoardCategory parentCategory { get; private set; }
 
     [Header("Parameters")]
@@ -25,18 +25,20 @@ public class BoardQuestion : MonoBehaviour
     private bool IsInteractable => canvasGroup.interactable;
 
     [Header("Data")]
-    public TriviaQuestion Question;
+    public TriviaQuestionData QuestionData;
 
     [Header("Values")]
-    [SerializeField] private float _enterScale = 1.1f;
-    [SerializeField] private float _hooverScaleDuration;
-    [SerializeField] private float _scaleOffsetFactor;
+    private float _enterScale = 1.1f;
+    private float _hooverScaleDuration = 0.2f;
+    private float _showDuration = 0.2f;
     
-    internal void Initialize(TriviaQuestion question, BoardCategory parentCategory)
+    internal void Initialize(TriviaQuestionData question, BoardCategory parentCategory)
     {
         this.parentCategory = parentCategory;
-        pointLabel.text = question.points.ToString();
-        questionLabel.text = question.question;
+        QuestionData = question;
+
+        pointLabel.text = QuestionData.points.ToString();
+        questionLabel.text = QuestionData.question;
     }
 
     public void OnPointerEnter()
@@ -70,8 +72,14 @@ public class BoardQuestion : MonoBehaviour
     internal void OpenCard(Vector2 cardScale, float pointsSize, Vector2 pos, float duration)
     {
         DOTween.Kill(scaleTween);
-        Sequence sequence = DOTween.Sequence();
 
+        // Sort the canvas group so it can be placed ontop of all the other things
+        Canvas sortingCanvas = this.AddComponent<Canvas>();
+        sortingCanvas.overrideSorting = true;
+        sortingCanvas.sortingOrder = 1;
+
+
+        Sequence sequence = DOTween.Sequence();
         float rectWidth = _rectTransform.rect.width;
         sequence.Append(DOTween.To(() => rectWidth, x => rectWidth = x, cardScale.x, duration)
             .SetEase(Ease.InOutSine)
@@ -92,10 +100,6 @@ public class BoardQuestion : MonoBehaviour
         sequence.Join(pointLabel.transform.DOMove(new Vector2(pos.x, pos.y), duration).SetEase(Ease.InOutSine));
         sequence.Join(pointLabel.transform.DOScale(pointsSize, duration).SetEase(Ease.InOutSine));
 
-        Canvas sortingCanvas = this.AddComponent<Canvas>();
-        sortingCanvas.overrideSorting = true;
-        sortingCanvas.sortingOrder = 1;
-
         sequence.OnComplete(ShowInfo);
         sequence.Play();
     }
@@ -107,10 +111,28 @@ public class BoardQuestion : MonoBehaviour
         
         Sequence infoSequence = DOTween.Sequence();
         infoSequence.SetDelay(0.5f);
-        infoSequence.Append(pointLabel.DOFade(0, 0.5f));
-        infoSequence.Append(questionLabel.DOFade(1, 0.5f));
+        infoSequence.Append(pointLabel.DOFade(0, _showDuration));
+        infoSequence.Append(questionLabel.DOFade(1, _showDuration));
 
         infoSequence.Play();
-        infoSequence.OnComplete(() => { QuestionDisplayed?.Invoke(this); });
+        infoSequence.OnComplete(() => { 
+            QuestionDisplayed?.Invoke(this); 
+        });
+    }
+
+    internal void HideInfo(Action OnComplete)
+    {
+        questionLabel.DOFade(0, _showDuration).OnComplete(() => { 
+            OnComplete?.Invoke(); 
+        });
+    }
+
+    internal void MovePanelUp(Transform newParent, Action OnComplete)
+    {
+        // We need it to go to a new mask parent so we can move it out
+        panel.SetParent(newParent);
+        background.transform.DOLocalMoveY(panel.rect.height, 0.5f)
+            .SetEase(Ease.InOutSine)
+            .OnComplete(() => { OnComplete?.Invoke(); }); ;
     }
 }
