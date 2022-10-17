@@ -14,6 +14,7 @@ public enum LightingGroup
 {
     Front,
     Contestants,
+    SingleContestant,
     Host
 }
 

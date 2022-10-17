@@ -6,7 +6,8 @@ public enum StagePresets
 {
     Front,
     Contestants,
-    Host
+    SingleContestant,
+    Host,
 }
 
 public class StageManager : Singleton<StageManager>
@@ -17,7 +18,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private CameraManager _cameraManager;
     [SerializeField] private LightManager _lightManager;
 
-    public void ChangeView(StagePresets stagePreset)
+    public void ChangeView(StagePresets stagePreset, object[] args = null)
     {
         switch (stagePreset)
         {
@@ -32,6 +33,10 @@ public class StageManager : Singleton<StageManager>
             case StagePresets.Host:
                 _cameraManager.ChangeCameraAngle(CameraAngles.Host);
                 _lightManager.ChangeLighting(LightingGroup.Host);
+                break;
+            case StagePresets.SingleContestant:
+                _cameraManager.ChangeCameraAngle(CameraAngles.Contestants);
+                _lightManager.ChangeLighting(LightingGroup.SingleContestant);
                 break;
             default:
                 break;

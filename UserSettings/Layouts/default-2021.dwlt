@@ -43,7 +43,7 @@ MonoBehaviour:
     width: 1920
     height: 1040
   m_ShowMode: 0
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 7}
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 97
+  controlID: 102
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -118,8 +118,8 @@ MonoBehaviour:
     y: 0
     width: 1040
     height: 1040
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 118
+  controlID: 27
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 154
+  controlID: 96
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -352,8 +352,8 @@ MonoBehaviour:
     y: 0
     width: 502
     height: 561
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 27}
   m_Panes:
   - {fileID: 27}
@@ -1575,22 +1575,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_Project/Materials
+    - Assets/_Project/Scripts/Trivia
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/_Project/Materials
+  - Assets/_Project/Scripts/Trivia
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\GitE\Mogul Money
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a87c0000
-    m_LastClickedID: 31912
-    m_ExpandedIDs: 00000000367b0000387b00003a7b00003c7b00003e7b0000407b0000aa7c0000b07c0000dc7f000000ca9a3b
+    m_SelectedIDs: 427b0000
+    m_LastClickedID: 31554
+    m_ExpandedIDs: 00000000387b00003a7b00003c7b00003e7b0000407b0000427b00001a7d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1618,7 +1618,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000367b0000387b00003a7b00003c7b00003e7b0000407b0000
+    m_ExpandedIDs: 00000000387b00003a7b00003c7b00003e7b0000407b0000427b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1662,7 +1662,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 3}
+      m_ClientGUIView: {fileID: 6}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -3461,9 +3461,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.0923696, y: 4.643696, z: -4.3112516}
+    m_Target: {x: 30.92609, y: -4.331204, z: 25.777975}
     speed: 2
-    m_Value: {x: -2.0923696, y: 4.643696, z: -4.3112516}
+    m_Value: {x: 30.92609, y: -4.331204, z: 25.777975}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -3510,13 +3510,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.044172563, y: 0.09724943, z: -0.004320025, w: 0.99427164}
+    m_Target: {x: 0.09747842, y: 0.4135657, z: -0.04458724, w: 0.90414494}
     speed: 2
-    m_Value: {x: 0.045614436, y: 0.10767626, z: -0.004945103, w: 0.99312675}
+    m_Value: {x: 0.09747819, y: 0.4135647, z: -0.04458713, w: 0.9041428}
   m_Size:
-    m_Target: 7.9435906
+    m_Target: 24.24871
     speed: 2
-    m_Value: 8.317896
+    m_Value: 24.24871
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -3600,20 +3600,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ac780000
-      m_LastClickedID: 30892
-      m_ExpandedIDs: 16fbffff9a77000088780000ca780000fe780000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 64ddfcff2058ffff16fbffff027800000e780000d2780000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Sky and Fog Global Volume
-        m_OriginalName: Sky and Fog Global Volume
+        m_Name: Clock
+        m_OriginalName: Clock
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 30886
+        m_UserData: 30722
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
