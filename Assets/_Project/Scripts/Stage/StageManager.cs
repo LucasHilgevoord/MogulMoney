@@ -23,12 +23,15 @@ public class StageManager : Singleton<StageManager>
         {
             case StagePresets.Front:
                 _cameraManager.ChangeCameraAngle(CameraAngles.Front);
+                _lightManager.ChangeLighting(LightingGroup.Front);
                 break;
             case StagePresets.Contestants:
                 _cameraManager.ChangeCameraAngle(CameraAngles.Contestants);
+                _lightManager.ChangeLighting(LightingGroup.Contestants);
                 break;
             case StagePresets.Host:
                 _cameraManager.ChangeCameraAngle(CameraAngles.Host);
+                _lightManager.ChangeLighting(LightingGroup.Host);
                 break;
             default:
                 break;
