@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private List<Contestant> _contestants = new List<Contestant>();
+    public List<Contestant> Contestants { get { return _contestants; } }
 
     internal void Initialize()
     {

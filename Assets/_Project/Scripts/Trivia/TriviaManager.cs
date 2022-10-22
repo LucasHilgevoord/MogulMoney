@@ -21,6 +21,7 @@ public class TriviaManager : MonoBehaviour
     [SerializeField] private QuestionInputHandler _questionHandler;
 
     private TriviaQuestion _currentQuestion;
+    private Contestant _answeringContestant;
 
     private float _buzzerTime = 10f;
     private float _answerTime = 30f;
@@ -144,21 +145,40 @@ public class TriviaManager : MonoBehaviour
             // No one pressed
         } else
         {
-            StageManager.Instance.ChangeLight(LightingGroup.SingleContestant, 0.5f);
-            ShowQuestionInput();
+            _answeringContestant = PlayerManager.Instance.Contestants[candidate];
+            StartCoroutine(ShowQuestionInput());
         }
     }
 
-    private void ShowQuestionInput()
+    private IEnumerator ShowQuestionInput()
     {
+        StageManager.Instance.ChangeLight(LightingGroup.SingleContestant, 0.5f);
+
+        // Fade out the other displays a bit
+        foreach (Contestant contestant in PlayerManager.Instance.Contestants)
+        {
+            if (contestant == _answeringContestant) { continue; }
+            contestant.Display.TogglePanelActivity(false);
+        }
+
+        yield return new WaitForSeconds(2f);
         QuestionInputHandler.QuestionAnswered += OnQuestionAnswered;
 
         _questionHandler.SetupPanel(_currentQuestion.QuestionData, _answerTime);
         _questionHandler.ShowPanel();
     }
 
-    private void OnQuestionAnswered(bool correct)
+    private void OnQuestionAnswered(string answer, bool correct)
     {
-        Debug.Log("Question answered: " + correct);
+        QuestionInputHandler.QuestionAnswered -= OnQuestionAnswered;
+        _questionHandler.HidePanel(0, () => StartCoroutine(SetupAnswerDisplay(answer, correct)));
     }
+
+    private IEnumerator SetupAnswerDisplay(string answer, bool correct)
+    {
+        yield return new WaitForSeconds(1f);
+
+        _answeringContestant.Display.EnableAnswerPanel(answer);
+        _answeringContestant.Display.ShowCorrectColor(correct, 5f);
+    }   
 }

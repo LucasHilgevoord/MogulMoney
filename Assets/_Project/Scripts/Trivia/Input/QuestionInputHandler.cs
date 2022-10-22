@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class QuestionInputHandler : MonoBehaviour
 {
-    public static event Action<bool> QuestionAnswered;
+    public static event Action<string, bool> QuestionAnswered;
 
     [SerializeField] private GameObject _panel;
 
@@ -103,7 +103,7 @@ public class QuestionInputHandler : MonoBehaviour
         _panel.SetActive(true);
     }
 
-    private void HidePanel(float delay = 0)
+    internal void HidePanel(float delay = 0, Action OnComplete = null)
     {
         Sequence sequence = DOTween.Sequence();
         sequence.AppendInterval(delay);
@@ -114,7 +114,11 @@ public class QuestionInputHandler : MonoBehaviour
         sequence.Append(_overlay.DOFade(0, 0.5f));
         sequence.Play();
 
-        sequence.OnComplete(() => _panel.SetActive(false));
+        sequence.OnComplete(() =>
+        {
+            _panel.SetActive(false);
+            OnComplete?.Invoke();
+        });
 
     }
 
@@ -123,7 +127,10 @@ public class QuestionInputHandler : MonoBehaviour
         if (_allowInput)
         {
             if (Input.GetKeyDown(KeyCode.Return) && _confirmButton.interactable)
+            {
                 OnConfirmButtonClicked();
+                return;
+            }
 
             UpdateTimer();
         }
@@ -179,14 +186,14 @@ public class QuestionInputHandler : MonoBehaviour
         if (_answerInput.text != "")
             isCorrect = CheckAnswer();
 
-        QuestionAnswered?.Invoke(isCorrect);
-        HidePanel();
+        QuestionAnswered?.Invoke(_answerInput.text, isCorrect);
     }
 
     private void ToggleInteraction(bool interactable)
     {
         _confirmButton.interactable = interactable;
         _passButton.interactable = interactable;
+        _answerInput.interactable = false;
 
         _allowInput = interactable;
     }
