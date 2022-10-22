@@ -1,12 +1,13 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TriviaManager : MonoBehaviour
 {
     private bool _hasStarted;
-    private string _triviaJsonPath = "Data/Trivia";
+    private string _triviaJsonPath = "Data/TriviaData";
     private TriviaData _trivia;
 
     [SerializeField] private GameObject _triviaPanel;
@@ -20,6 +21,9 @@ public class TriviaManager : MonoBehaviour
     [SerializeField] private QuestionInputHandler _questionHandler;
 
     private TriviaQuestion _currentQuestion;
+
+    private float _buzzerTime = 10f;
+    private float _answerTime = 30f;
 
     public void Awake()
     {
@@ -52,13 +56,19 @@ public class TriviaManager : MonoBehaviour
         if (_hasStarted) { return; }
         _hasStarted = true;
 
+        // TESTING
+        //_currentQuestion = _triviaBoard._boardCategories[0].Questions[0];
+        //OnBuzzerPressed(1);
+        //return;
+        // TESTING
 
-        _buzzerHandler.SetupStage("What is the capital of France?");
-        _buzzerHandler.StartBuzzer(4);
-        return;
+        StartTriviaUI();
+    }
 
+    private void StartTriviaUI()
+    {
         StageManager.Instance.ChangeView(StagePresets.Front);
-
+        
         _triviaPanel.SetActive(true);
         _triviaCanvasGroup.DOFade(1, _fadeInDuration).OnComplete(() =>
         {
@@ -93,7 +103,6 @@ public class TriviaManager : MonoBehaviour
         _currentQuestion = question;
 
         // Setup the buzzer handler
-        _buzzerHandler.SetupStage(_currentQuestion.QuestionData.question);
         StageManager.Instance.ChangeView(StagePresets.Contestants);
 
         // Wait a bit until we hide the panel
@@ -110,22 +119,41 @@ public class TriviaManager : MonoBehaviour
         {
             _triviaCanvasGroup.DOFade(0, 0.5f);
             isHidden = true;
-
-            
         });
 
         // Wait until we have hidden the board
         while (isHidden) { yield return null; }
-
         yield return new WaitForSeconds(1f);
 
-        BuzzerHandler.ButtonPressed += OnBuzzerPressed;
-        _buzzerHandler.StartBuzzer(10);
+        StartBuzzer();
+    }
+
+    private void StartBuzzer()
+    {
+        _buzzerHandler.SetupPanel(_currentQuestion.QuestionData.question);
+
+        BuzzerHandler.BuzzerPressed += OnBuzzerPressed;
+        _buzzerHandler.StartBuzzer(_buzzerTime); 
     }
 
     private void OnBuzzerPressed(int candidate)
     {
-        StageManager.Instance.ChangeView(StagePresets.SingleContestant, new object[] { candidate });
-        //_questionHandler.StartInput(question);
+        BuzzerHandler.BuzzerPressed -= OnBuzzerPressed;
+        StageManager.Instance.ChangeLight(LightingGroup.SingleContestant, 0.5f);
+
+        ShowQuestionInput();
+    }
+
+    private void ShowQuestionInput()
+    {
+        QuestionInputHandler.QuestionAnswered += OnQuestionAnswered;
+
+        _questionHandler.SetupPanel(_currentQuestion.QuestionData, _answerTime);
+        _questionHandler.ShowPanel();
+    }
+
+    private void OnQuestionAnswered(bool correct)
+    {
+        Debug.Log("Question answered: " + correct);
     }
 }

@@ -3,12 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuzzerHandler : MonoBehaviour
 {
-    public static event Action<int> ButtonPressed;
+    public static event Action<int> BuzzerPressed;
 
     [SerializeField] private RectTransform _panel;
     [SerializeField] private TextMeshProUGUI _questionLabel;
@@ -24,10 +25,7 @@ public class BuzzerHandler : MonoBehaviour
     private float _startTime;
     private float _currentTime;
 
-    private float _warningTimeInSeconds = 5f;
-    private bool _enableWarning;
-
-    internal void SetupStage(string questionText)
+    internal void SetupPanel(string questionText)
     {
         _questionLabel.text = questionText;
         _panel.anchoredPosition = Vector2.up * _panel.rect.height;
@@ -72,17 +70,17 @@ public class BuzzerHandler : MonoBehaviour
             // TESTING
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                HitButton(1);
+                HitButton(0);
                 return;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                HitButton(2);
+                HitButton(1);
                 return;
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                HitButton(3);
+                HitButton(2);
                 return;
             }
 
@@ -110,9 +108,9 @@ public class BuzzerHandler : MonoBehaviour
     {
         _enableTimer = false;
         DOTween.Kill(_backgroundImage);
-        ButtonPressed?.Invoke(candidate);
+        HidePanel(candidate);
 
-        //HidePanel();
+        PlayerManager.Instance.EnableBuzzer(candidate);
     }
 
     private void TimeUp()
@@ -122,15 +120,17 @@ public class BuzzerHandler : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_backgroundImage.DOColor(_normalColor, 1f));
         sequence.Join(_backgroundRect.DOShakeAnchorPos(1, 10, 10, 50, false));
-        sequence.OnComplete(HidePanel);
+        sequence.OnComplete(() => { HidePanel(-1); });
         sequence.Play();
     }
 
-    private void HidePanel()
+    private void HidePanel(int response)
     {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_backgroundRect.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine));
         sequence.Append(_panel.DOAnchorPosY(_panel.rect.height, 0.5f).SetEase(Ease.InSine));
+
+        sequence.OnComplete(() => { BuzzerPressed?.Invoke(response); });
         sequence.Play();
     }
 }

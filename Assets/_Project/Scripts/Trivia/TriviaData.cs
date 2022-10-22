@@ -26,6 +26,7 @@ public class TriviaCategoryData
 public class TriviaQuestionData
 {
     public string question;
+    public string category;
     public string[] answer;
     public int points;
 

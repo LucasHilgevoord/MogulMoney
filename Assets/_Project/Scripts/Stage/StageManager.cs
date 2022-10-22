@@ -12,11 +12,16 @@ public enum StagePresets
 
 public class StageManager : Singleton<StageManager>
 {
-    [SerializeField] private StagePresets _currentView = StagePresets.Front;
+    [SerializeField] private StagePresets _currentView;
 
     [Header("Components")]
     [SerializeField] private CameraManager _cameraManager;
     [SerializeField] private LightManager _lightManager;
+
+    private void Start()
+    {
+        ChangeView(_currentView);
+    }
 
     public void ChangeView(StagePresets stagePreset, object[] args = null)
     {
@@ -43,9 +48,13 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+    public void ChangeLight(LightingGroup group, float duration = 0)
+    {
+        _lightManager.ChangeLighting(group, duration);
+    }
+
     private void OnValidate()
     {
-        if (!Application.isPlaying)
-            ChangeView(_currentView);
+        ChangeView(_currentView);
     }
 }

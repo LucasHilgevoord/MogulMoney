@@ -8,7 +8,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //_triviaManager.StartGame();
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        PlayerManager.Instance.Initialize();
     }
 
     private void Update()

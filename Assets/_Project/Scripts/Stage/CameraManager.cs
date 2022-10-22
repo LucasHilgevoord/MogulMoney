@@ -27,7 +27,6 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] private Camera _camera;
     [SerializeField] private List<CameraPosition> _cameraPositions;
-    [SerializeField] private CameraAngles _startAngle = CameraAngles.Front;
 
     public void ChangeCameraAngle(CameraAngles cameraAngle, float moveDuration = 0, Ease ease = Ease.Flash)
     {
@@ -49,9 +48,9 @@ public class CameraManager : MonoBehaviour
             _camera.transform.DOMove(cameraPosition.Position, moveDuration).SetEase(ease);
             _camera.transform.DORotate(cameraPosition.Rotation, moveDuration).SetEase(ease);
         }
-        
-        _camera.fieldOfView = cameraPosition.POV;
+
         _camera.focalLength = cameraPosition.FocalLenght;
+        _camera.fieldOfView = cameraPosition.POV;
     }
 
     private void OnValidate()

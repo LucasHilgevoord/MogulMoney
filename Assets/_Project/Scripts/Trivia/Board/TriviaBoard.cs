@@ -11,7 +11,7 @@ public class TriviaBoard : MonoBehaviour
     private TriviaQuestion _selectedQuestion;
 
     [Header("Categories")]
-    private List<BoardCategory> _boardCategories;
+    internal List<BoardCategory> _boardCategories;
     [SerializeField] private BoardCategory _categoryPrefab;
     [SerializeField] private GameObject _categoryParent;
     [SerializeField] private float _categoryFadeDelay = 0.2f;
@@ -46,6 +46,9 @@ public class TriviaBoard : MonoBehaviour
             category.Questions = new TriviaQuestion[categories[i].questions.Length];
             for (int j = 0; j < categories[i].questions.Length; j++)
             {
+                // Assign the category we're in to the questionData so we can trace it back
+                categories[i].questions[j].category = categories[i].title;
+
                 // Create the question and assign the question data
                 TriviaQuestion question = Instantiate(_questionPrefab, category.QuestionParent.transform);
                 question.Initialize(categories[i].questions[j], category);
