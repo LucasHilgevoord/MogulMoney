@@ -22,15 +22,16 @@ public enum LightingGroup
 
 public class LightManager : MonoBehaviour
 {
-    private List<Light> _activeLights = new List<Light>();
     [SerializeField] private List<LightPreset> _lightPresets;
-    private LightingGroup _currentLightingGroup;
+    private LightPreset _currentPreset;
 
-    private void SetupIntensity()
+    private void SetupIntensities()
     {
         // Set the initial lighting intensity
         foreach (LightPreset preset in _lightPresets)
         {
+            if (preset.Intensities != null && preset.Intensities.Length == preset.Lights.Length) { continue; }
+            
             preset.Intensities = new float[preset.Lights.Length];
             for (int i = 0; i < preset.Lights.Length; i++)
             {
@@ -39,50 +40,52 @@ public class LightManager : MonoBehaviour
         }
     }
 
-    internal void ChangeLighting(LightingGroup group, float duration = 0)
+    internal void ChangeLighting(LightingGroup newGroup, float duration = 0)
     {
         // Check if we have a preset for this group
-        LightPreset lightPreset = _lightPresets.Find(x => x.Group == group);
-        if (lightPreset == null)
-            throw new KeyNotFoundException($"Lighting preset for {group} not found");
+        LightPreset newPreset = _lightPresets.Find(x => x.Group == newGroup);
+        if (newPreset == null)
+            throw new KeyNotFoundException($"Lighting preset for {newGroup} not found");
 
         // Check if this group is already enabled
-        if (group == _currentLightingGroup) { return; }
-        _currentLightingGroup = lightPreset.Group;
+        if (_currentPreset != null && newGroup == _currentPreset.Group) { return; }
 
-        // Clone the list of active lights so we can alter it
-        List<Light> activeLights = new List<Light>(_activeLights);
+        // QUICKFIX, Intensities are not set on start
+        if (newPreset.Intensities == null)
+            SetupIntensities();
 
-        // Disable all the lights
-        foreach (Light light in activeLights)
+        // Disable all the active lights
+        if (_currentPreset != null)
         {
-            // Check if we still need already active lights in the new preset
-            if (Array.Exists(lightPreset.Lights, x => x == light))
-                continue;
-
-            // Fade out the light if we have a duration
-            if (duration != 0)
+            foreach (Light light in _currentPreset.Lights)
             {
-                light.DOIntensity(0, duration).OnComplete(() => { 
+                // Check if we still need already active lights in the new preset
+                if (Array.Exists(newPreset.Lights, x => x == light))
+                    continue;
+
+                // Fade out the light if we have a duration
+                if (duration != 0)
+                {
+                    light.DOIntensity(0, duration).OnComplete(() => {
+                        light.gameObject.SetActive(false);
+                    });
+                }
+                else
+                {
                     light.gameObject.SetActive(false);
-                });
-            } else
-            {
-                light.gameObject.SetActive(false);
+                }
             }
-
-            // Remove the light from the list
-            _activeLights.Remove(light);
         }
 
         // Enable all the lights
-        for (int i = 0; i < lightPreset.Lights.Length; i++)
+        for (int i = 0; i < newPreset.Lights.Length; i++)
         {
-            Light light = lightPreset.Lights[i];
-            float intensity = lightPreset.Intensities[i];
+            Light light = newPreset.Lights[i];
+            float intensity = newPreset.Intensities[i];
 
             // No need to do something with this light because it's already on
-            if (_activeLights.Find(x => x == light) != null) { continue; }
+            if (light.isActiveAndEnabled) { continue; }
+            light.gameObject.SetActive(true);
 
             // Fade in the light if we have a duration
             if (duration != 0)
@@ -92,15 +95,17 @@ public class LightManager : MonoBehaviour
             else
             {
                 light.intensity = intensity;
-                light.gameObject.SetActive(true);
             }
-            
-            _activeLights.Add(light);
         }
+
+        // Change the current preset to the new preset
+        _currentPreset = newPreset;
     }
 
     private void OnValidate()
     {
+        if (!Application.isEditor || Application.isPlaying) { return; }
+
         if (_lightPresets.Count != Enum.GetNames(typeof(LightingGroup)).Length)
         {
             Debug.LogWarning("Lighting group count has been updated! Please check..");
@@ -126,6 +131,6 @@ public class LightManager : MonoBehaviour
             }
         }
 
-        SetupIntensity();
+        SetupIntensities();
     }
 }

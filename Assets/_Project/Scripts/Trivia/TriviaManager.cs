@@ -117,7 +117,7 @@ public class TriviaManager : MonoBehaviour
         bool isHidden = false;
         _triviaBoard.HideBoard(() =>
         {
-            _triviaCanvasGroup.DOFade(0, 0.5f);
+            _triviaCanvasGroup.DOFade(0, 0.5f).OnComplete(() => { _triviaPanel.SetActive(false); });
             isHidden = true;
         });
 
@@ -139,9 +139,14 @@ public class TriviaManager : MonoBehaviour
     private void OnBuzzerPressed(int candidate)
     {
         BuzzerHandler.BuzzerPressed -= OnBuzzerPressed;
-        StageManager.Instance.ChangeLight(LightingGroup.SingleContestant, 0.5f);
-
-        ShowQuestionInput();
+        if (candidate == -1)
+        {
+            // No one pressed
+        } else
+        {
+            StageManager.Instance.ChangeLight(LightingGroup.SingleContestant, 0.5f);
+            ShowQuestionInput();
+        }
     }
 
     private void ShowQuestionInput()
