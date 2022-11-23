@@ -9,7 +9,8 @@ public enum CameraAngles
     Front,
     Contestants,
     Top,
-    Host
+    Host,
+    Award
 }
 
 [Serializable]
