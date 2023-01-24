@@ -73,8 +73,8 @@ public class TriviaManager : MonoBehaviour
         _triviaPanel.SetActive(true);
         _triviaCanvasGroup.DOFade(1, _fadeInDuration).OnComplete(() =>
         {
-            //StartCategoryPreview();
-            StartTriviaBoard();
+            StartCategoryPreview();
+            //StartTriviaBoard();
         });
     }
     
